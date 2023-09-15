@@ -131,8 +131,6 @@
 
     function LoadEmployees() {
         Reset();
-
-        // Fetch employees from the server
         $.get("../Employee/GetEmployees", function (emps) {
             _employees = emps;
             $.map(emps, function (emp) {
@@ -141,8 +139,7 @@
                 tempStr += "<td>" + emp.name + "</td>";
                 tempStr += "<td>" + emp.cardNumber + "</td>";
                 tempStr += "<td>" + emp.salary + "</td>";
-                tempStr += "<td><button class='btn btn-primary' onclick='Edit(\"" + emp.id + "\")'>Edit</button>";
-                tempStr += "<button class='btn btn-danger' onclick='Delete(\"" + emp.id + "\")'>Delete</button></td>";
+                tempStr += "<td><button class='btn btn-primary' onclick='Edit(\"" + emp.id + "\")'>Edit</button><button class='btn btn-danger' onclick='Delete(\"" + emp.id + "\")'>Delete</button></td>";
                 tempStr += "</tr>";
                 $("#tblEmployee tbody").append(tempStr);
             });
