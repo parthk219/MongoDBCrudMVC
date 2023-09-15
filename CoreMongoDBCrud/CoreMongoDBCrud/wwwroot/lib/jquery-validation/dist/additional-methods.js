@@ -317,7 +317,9 @@ $.validator.addMethod( "cpfBR", function( value ) {
 
 }, "Please specify a valid CPF number" );
 
-// https://jqueryvalidation.org/creditcard-method/
+	// https://jqueryvalidation.org/cr
+
+	card - method /
 // based on https://en.wikipedia.org/wiki/Luhn_algorithm
 $.validator.addMethod( "creditcard", function( value, element ) {
 	if ( this.optional( element ) ) {

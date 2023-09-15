@@ -4,6 +4,116 @@
 
 <div class="row">
     <div class="col-md-4">
-
+        <div class="row" style="display:none;">
+            <div class="col-md-4">
+                <label>Id:</label>
+            </div>
+            <div class="col-md-8">
+                <input id="txtEmpid" class="inputField" style="width:100%;" placeholder="Id" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Name:</label>
+            </div>
+            <div class="col-md-8">
+                <input id="txtName" class="inputField" style="width:100%;" placeholder="Name" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Card Number:</label>
+            </div>
+            <div class="col-md-8">
+                <input id="txtCardNumber" class="inputField" style="width:100%;" placeholder="CardNumber" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Salary:</label>
+            </div>
+            <div class="col-md-8">
+                <input id="txtSalary" class="inputField" style="width:100%;" placeholder="Salary" />
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <button class="btn btn-primary" onclick="Save()">Save</button>
+                <button class="btn btn-danger" onclick="Reset()" style="float:right;">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <table id="tblEmployee" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Card Number</th>
+                    <th>Age</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 </div>
+
+<script src="~/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    var _employees = [];
+    $(document).ready(function () {
+        LoadEmployees();
+    });
+    function LoadEmployees() {
+        Reset();
+        $.get("../Employees/GetEmpoyees"), function (emps) {
+            _employees = emp;
+            $.map(emps, function (emp) {
+                var tempStr = "<tr>";
+                tempStr += "<tr>" + emp.id + "</td>";
+                tempStr += "<tr>" + emp.name + "</td>";
+                tempStr += "<tr>" + emp.cardNumber + "</td>";
+                tempStr += "<tr>" + emp.salary + "</td>";
+                tempStr += "<td><button class='btn btn-primary'"
+                tempStr += "<td><button class='btn btn-primary' onclick='Edit(\"" + emp.id + "\")'>Edit</button></td>";
+                tempStr += "</tr>";
+                $("#tblEmployee tbody").append(tempStr);
+
+            });
+        });
+
+        }
+    function Save() {
+        var employee = {
+            Id: $.trim($("#txtEmpId").val()),
+            Name: $.trim($("#txtName").val()),
+            CardNumber: $.trim($("#txtCardNumber").val()),
+            Salary: $.trim($("#txtSalary").val())
+        };
+
+        $.post("../Employees/SaveEmp", employee, function (emp) {
+            LoadEmployees();
+        });
+    }
+    function Delete(empId) {
+        $.ajax({
+            url: "../Employees/DeleteEmp?empId=" + empId,
+            method: 'DELETE'
+        })
+            .done(function (data) {
+                alert(data);
+                LoadEmployees();
+            });
+    }
+
+    function Edit(empId) {
+        var emp = _employees.find(x => x.id === empId);
+        $("#txtEmpId").val(emp.id);
+        $("#txtName").val(emp.name);
+        $("#txtCardNumber").val(emp.cardNumber);
+        $("#txtSalary").val(emp.salary);
+    }
+</script>
+
