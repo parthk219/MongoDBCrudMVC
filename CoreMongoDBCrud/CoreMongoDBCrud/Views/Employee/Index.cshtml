@@ -40,6 +40,7 @@
             <div class="col-md-4"></div>
             <div class="col-md-8">
                 <button class="btn btn-primary" onclick="Save()">Save</button>
+                <button class="btn btn-secondary" onclick="SaveAs()">SaveAs</button>
                 <button class="btn btn-danger" onclick="Reset()" style="float:right;">Reset</button>
             </div>
         </div>
@@ -60,63 +61,6 @@
     </div>
 </div>
 
-@*<script src="~/jquery/jquery.min.js"></script>
-    <script type="text/javascript">
-        var _employees = [];
-        $(document).ready(function () {
-            LoadEmployees();
-        });
-        function LoadEmployees() {
-            Reset();
-            $.get("../Employee/GetEmpoyees"), function (emps) {
-                _employees = emp;
-                $.map(emps, function (emp) {
-                    var tempStr = "<tr>";
-                    tempStr += "<tr>" + emp.id + "</td>";
-                    tempStr += "<tr>" + emp.name + "</td>";
-                    tempStr += "<tr>" + emp.cardNumber + "</td>";
-                    tempStr += "<tr>" + emp.salary + "</td>";
-                    tempStr += "<td><button class='btn btn-primary'"
-                    tempStr += "<td><button class='btn btn-primary' onclick='Edit(\"" + emp.id + "\")'>Edit</button></td>";
-                    tempStr += "</tr>";
-                    $("#tblEmployee tbody").append(tempStr);
-
-                });
-            });
-
-            }
-        function Save() {
-            var employee = {
-                Id: $.trim($("#txtEmpId").val()),
-                Name: $.trim($("#txtName").val()),
-                CardNumber: $.trim($("#txtCardNumber").val()),
-                Salary: $.trim($("#txtSalary").val())
-            }
-            };
-
-        $.post("../Employee/SaveEmp", employee, function (emp) {
-                LoadEmployees();
-            });
-        }
-        function Delete(empId) {
-            $.ajax({
-                url: "../Employee/DeleteEmp?empId=" + empId,
-                method: 'DELETE'
-            })
-                .done(function (data) {
-                    alert(data);
-                    LoadEmployees();
-                });
-        }
-
-        function Edit(empId) {
-            var emp = _employees.find(x => x.id === empId);
-            $("#txtEmpId").val(emp.id);
-            $("#txtName").val(emp.name);
-            $("#txtCardNumber").val(emp.cardNumber);
-            $("#txtSalary").val(emp.salary);
-        }
-    </script>*@
 
 
 
@@ -131,7 +75,7 @@
 
     function LoadEmployees() {
         Reset();
-        $.get("../Employee/GetEmployees", function (emps) {
+        $.get("../Employee/GetEmpolyees", function (emps) {
             _employees = emps;
             $.map(emps, function (emp) {
                 var tempStr = "<tr>";
@@ -148,40 +92,75 @@
 
     function Save() {
         var employee = {
-            Id: $.trim($("#txtEmpId").val()),
+            //Id: $.trim($("#txtEmpId").val()),
+            Id: $.trim($("#txtEmpId").val()),       //        $("#txtEmpId").val(emp.id);
             Name: $.trim($("#txtName").val()),
             CardNumber: $.trim($("#txtCardNumber").val()),
             Salary: $.trim($("#txtSalary").val())
         };
-
-        // Send a POST request to save the employee
         $.post("../Employee/SaveEmp", employee, function (emp) {
             LoadEmployees();
         });
     }
 
     function Delete(empId) {
-        // Send a DELETE request to delete the employee
+        alert(empId);
+
         $.ajax({
             url: "../Employee/DeleteEmp?empId=" + empId,
             method: 'DELETE'
         }).done(function (data) {
-            alert(data);
+            //alert(data);
             LoadEmployees();
         });
     }
 
+    //function Edit(empId) {
+    //    var emp = _employees.find(x => x.id == empId);
+    //    $("#txtEmpId").val(emp.id);
+    //    $("#txtName").val(emp.name);
+    //    $("#txtCardNumber").val(emp.cardNumber);
+    //    $("#txtSalary").val(emp.salary);
+    //}
+
     function Edit(empId) {
-        var emp = _employees.find(x => x.id === empId);
+        alert(empId);
+        var emp = _employees.find(x => x.id == empId);
+        console.log('Found emp:', emp);
+
         $("#txtEmpId").val(emp.id);
         $("#txtName").val(emp.name);
         $("#txtCardNumber").val(emp.cardNumber);
         $("#txtSalary").val(emp.salary);
     }
+    function SaveAs() {
+        var employee = {
+            Id: $.trim($("#txtEmpId")), // Trial
+            Name: $.trim($("#txtName").val()),
+            CardNumber: $.trim($("#txtCardNumber").val()),
+            Salary: $.trim($("#txtSalary").val())
+        };
+        //$.post("../Employee/SaveEmpAs", employee, function (emp)
+        $.ajax({
+            type: "POST",
+            url: "/Employee/SaveAsEmp",
+            data: JSON.stringify(employee),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log("Success:", response);
+                LoadEmployees();
+            },
+        //{
+        //    LoadEmployees();
+        });
+    }
+
+
 
     function Reset() {
         // Clear input fields
-        $("#txtEmpId").val("");
+        //$("#txtEmpId").val("");
         $("#txtName").val("");
         $("#txtCardNumber").val("");
         $("#txtSalary").val("");

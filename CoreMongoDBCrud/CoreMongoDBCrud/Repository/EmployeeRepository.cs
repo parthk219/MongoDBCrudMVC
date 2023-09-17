@@ -1,5 +1,6 @@
 ﻿using CoreMongoDBCrud.IReopsitory;
 using CoreMongoDBCrud.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,8 @@ namespace CoreMongoDBCrud.Repository
             var empobj= _employeetable.Find(x => x.Id == employee.Id).FirstOrDefault();
             if(empobj==null)
             {
+                //employee.Id = ObjectId.GenerateNewId().ToString();
+                //employee.Id = ObjectId.GenerateNewId().ToString();
                 _employeetable.InsertOne(employee);
             }
             else

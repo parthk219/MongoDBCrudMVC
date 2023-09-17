@@ -29,9 +29,20 @@ namespace CoreMongoDBCrud.Controllers
             return Json(emp);
         }
 
-        public JsonResult DeleteEmp(string employeeId)
+        [HttpPost]
+        public JsonResult SaveEmp(string Id, string Name, string CardNumber, string Salary)
         {
-            var deletedEmployee = _empRepo.Delete(employeeId);
+            var emp = _empRepo.Save(employee);
+            return Json(emp);
+
+        }
+
+
+
+        [HttpDelete]
+        public JsonResult DeleteEmp(string empId)
+        {
+            var deletedEmployee = _empRepo.Delete(empId);
             return Json(deletedEmployee);
         }
 
