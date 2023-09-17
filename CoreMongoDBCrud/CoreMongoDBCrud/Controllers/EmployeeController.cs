@@ -30,7 +30,7 @@ namespace CoreMongoDBCrud.Controllers
         }
 
         [HttpPost]
-        public JsonResult SaveEmp(string Id, string Name, string CardNumber, string Salary)
+        public JsonResult SaveAsEmp([FromBody] Employee employee)
         {
             var emp = _empRepo.Save(employee);
             return Json(emp);
