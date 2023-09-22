@@ -99,7 +99,9 @@
             Salary: $.trim($("#txtSalary").val())
         };
         $.post("../Employee/SaveEmp", employee, function (emp) {
-            LoadEmployees();
+        //    LoadEmployees();
+            location.reload();
+
         });
     }
 
@@ -111,7 +113,9 @@
             method: 'DELETE'
         }).done(function (data) {
             //alert(data);
-            LoadEmployees();
+        //    LoadEmployees();
+            location.reload();
+
         });
     }
 
@@ -133,28 +137,58 @@
         $("#txtCardNumber").val(emp.cardNumber);
         $("#txtSalary").val(emp.salary);
     }
-    function SaveAs() {
-        var employee = {
-            Id: $.trim($("#txtEmpId")), // Trial
-            Name: $.trim($("#txtName").val()),
-            CardNumber: $.trim($("#txtCardNumber").val()),
-            Salary: $.trim($("#txtSalary").val())
-        };
-        //$.post("../Employee/SaveEmpAs", employee, function (emp)
-        $.ajax({
-            type: "POST",
-            url: "/Employee/SaveAsEmp",
-            data: JSON.stringify(employee),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log("Success:", response);
-                LoadEmployees();
-            },
-        //{
-        //    LoadEmployees();
-        });
-    }
+    //function SaveAs()
+//test 1 OK
+    //function SaveAs() {
+    //    var employee = {
+    //        Id: $.trim($("#txtEmpId")), // Trial
+    //        Name: $.trim($("#txtName").val()),
+    //        CardNumber: $.trim($("#txtCardNumber").val()),
+    //        Salary: $.trim($("#txtSalary").val())
+    //    };
+    //    //$.post("../Employee/SaveEmpAs", employee, function (emp)
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Employee/SaveAsEmp",
+    //        data: JSON.stringify(employee),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //            console.log("Success:", response);
+    //            LoadEmployees();
+    //        },
+    //    //{
+    //    //    LoadEmployees();
+    //    });
+    //}
+    //{
+    //TEST 2 OK 
+    //    var id = $.trim($("#txtEmpId"));
+    //    var name = $.trim($("#txtName").val());
+    //    var cardNumber = $.trim($("#txtCardNumber").val());
+    //    var salary = $.trim($("#txtSalary").val());
+    //    var combinedValue = 'id=' + id + '&name=' + name + '&cardNumber=' + cardNumber + '&salary=' + salary;
+
+
+    //    $.ajax({
+    //        type: "POST",
+    //        //url: "/Employee/SaveAsEmp", 
+    //        url: "/Employee/SaveAsEmp?" + combinedValue,
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //            console.log("Success:", response);
+    //            LoadEmployees(); // Assuming you have a function to reload employee data
+    //        },
+    //        error: function (error) {
+    //            console.error("Error:", error);
+    //        }
+    //    });
+
+    //}
+
+
+
 
 
 
@@ -164,5 +198,6 @@
         $("#txtName").val("");
         $("#txtCardNumber").val("");
         $("#txtSalary").val("");
+
     }
 </script>

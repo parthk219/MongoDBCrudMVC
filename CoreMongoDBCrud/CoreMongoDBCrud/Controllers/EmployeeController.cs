@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace CoreMongoDBCrud.Controllers
 {
@@ -29,13 +31,31 @@ namespace CoreMongoDBCrud.Controllers
             return Json(emp);
         }
 
-        [HttpPost]
-        public JsonResult SaveAsEmp([FromBody] Employee employee)
-        {
-            var emp = _empRepo.Save(employee);
-            return Json(emp);
+        //[HttpPost]
+        //public JsonResult SaveAsEmp([FromBody] Employee employee)
+        //{
+        //    var emp = _empRepo.Save(employee);
+        //    return Json(emp);
 
+        //}
+
+        public IActionResult SaveAsEmp(string id, string name, string cardNumber, decimal salary)
+        {
+            
+            var employee = new Employee
+            {
+                Id = id,
+                Name = name,
+                CardNumber = cardNumber,
+                Salary = salary
+            };
+
+            var emp = _empRepo.Save(employee);
+
+            return Json(emp);
         }
+
+
 
 
 
